@@ -18,7 +18,7 @@ import Cart from './pages/Cart';
 import ProductPage from './pages/ProductPage';
 import AddHostel from './pages/AddHostel';
 import EditProducts from './pages/EditProducts';
-import AllProducts from './pages/AllProducts';
+import AllHostels from './pages/AllHostels';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import ForgotPassword from './pages/ForgotPassword';
@@ -82,7 +82,7 @@ function App() {
 					<Route exact path="/forgotPassword" element={<ForgotPassword />} />
 					<Route exact path="/add" element={<AddHostel />} />
 					<Route exact path="/edit/:id" element={<EditProducts />} />
-					<Route exact path="/allHostels" element={<AllProducts />} />
+					<Route exact path="/allHostels" element={<AllHostels />} />
 					<Route exact path="/addressInfo" element={<AddressInfo />} />
 					<Route exact path="/success" element={<Success />} />
 					<Route exact path="/payment" element={<Payment />} />

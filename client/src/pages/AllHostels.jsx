@@ -18,18 +18,12 @@ import '../styles/allProducts.css'
 import {GetSearchedProducts} from '../apiCalls/GetSearchedProducts';
 
 const genderArray = [
-    {name:'mens',text:'Mens'},
-    {name:'momen',text:'Womens'},
     {name:'girls',text:'Girls'},
     {name:'boys',text:'Boys'},
-]
-const occasionArray = [
-    {text:'Party Wear',name:'party'},
-    {text:'Casual',name:'casual'},
-    {text:'Formal',name:'formal'},
+    {name:'both',text:'Both'},
 ]
 
-const AllProducts = () => {
+const AllHostels = () => {
     // data from redux 
     let {loading=true,status,isAdmin} = useSelector((state)=>state.userDetailsReducer);
     const navigate = useNavigate();
@@ -68,8 +62,7 @@ const AllProducts = () => {
 
     
     const [inputs, setInputs] = useState({
-        minValue:"",maxValue:"",rating:"",stock:"",mens:false,womens:false,boys:false,girls:false,casual:false,party:false,formal:false,
-        inTrending:false,specialOffer:false
+        minValue:"",maxValue:"",rating:"",boys:false,girls:false,both:false
     })
     
       
@@ -77,12 +70,7 @@ const AllProducts = () => {
     const handleChange = (e)=>{
         name = e.target.name;
         value = e.target.value;
-        check = e.target.checked;
-        if(name=='minValue' || name=='maxValue' || name=='stock' || name=='rating'){
-            setInputs({...inputs,[name]:value});
-        }else{
-            setInputs({...inputs,[name]:check});
-        }
+        setInputs({...inputs,[name]:value});
     }
    
     const applyFilters = ()=>{
@@ -98,18 +86,9 @@ const AllProducts = () => {
             filterData['gender'] = {$in:filterGenderArray};
         }
 
-        occasionArray.forEach((item) => {
-            if(inputs[item.name]){
-                filterOccasionArray.push(item.text);
-            }
-        });
-        if(filterOccasionArray.length){
-            filterData['occasion'] = {$in:filterOccasionArray};
-        }
 
         let min=parseInt(inputs.minValue);
         let max=parseInt(inputs.maxValue);
-        let stock=parseInt(inputs.stock);
         let rating=parseInt(inputs.rating);
         if(min && max){
             filterData['price'] = {$lte:max,$gte:min};
@@ -119,19 +98,10 @@ const AllProducts = () => {
             filterData['price'] = {$gte:min};
         }
 
-        if(stock){
-            filterData['stock'] = {$lte:stock};
-        }
         if(rating){
             filterData['rating'] = {$lte:rating};
         }
 
-        if(inputs.specialOffer){
-            filterData['specialOffer'] = true;
-        }
-        if(inputs.inTrending){
-            filterData['inTrending'] = true;
-        }
 
         setShow(false);
         loadAllData(searchInput,filterData);
@@ -191,21 +161,6 @@ const AllProducts = () => {
             <Offcanvas.Body className='font1'>
                 <form action="">
                     
-                    <div className="filterBox">
-                        <div className="d-flex box">
-                            <input type="checkbox" name='inTrending' checked={inputs.inTrending} onChange={handleChange} />
-                            <div className='item ms-2'>In Trendings</div>
-                        </div>  
-                    </div>
-
-
-                    <div className="filterBox">
-                        <div className="d-flex box">
-                            <input type="checkbox" name='specialOffer' checked={inputs.specialOffer} onChange={handleChange} />
-                            <div className='item ms-2'>Special Offers</div>
-                        </div>  
-                    </div>
-
 
                     <div className="filterBox">
                         <div className="subHeading font1">Gender</div>
@@ -217,15 +172,6 @@ const AllProducts = () => {
                         ))}
                     </div>
 
-                    <div className="filterBox">
-                        <div className="subHeading font1">Occasion</div>
-                        {occasionArray.map((item,ind)=>(
-                          <div key={ind} className="d-flex box">
-                            <input type="checkbox" name={item.name} checked={inputs[item.name]} onChange={handleChange} />
-                            <div className='item ms-2'>{item.text}</div>
-                          </div>
-                        ))}
-                    </div>
 
                     <div className="filterBox">
                         <div className="subHeading font1">Price</div>
@@ -235,10 +181,6 @@ const AllProducts = () => {
                         </div>
                     </div>
 
-                    <div className="filterBox">
-                        <div className="subHeading font1">Stock</div>
-                        <input className='w-100' name='stock' value={inputs.stock} type="text" placeholder='less than' onChange={handleChange} />
-                    </div>
                         
 
                     <div className="filterBox">
@@ -281,4 +223,4 @@ const AllProducts = () => {
     )
 }
 
-export default AllProducts
+export default AllHostels

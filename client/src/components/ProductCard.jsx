@@ -107,12 +107,6 @@ const ProductCard = ({product,type,deleteProduct,orderedDate}) => {
                     </div> 
                 </div>
             }
-            {isAdmin && type=='admin' && 
-                <div className="stockAndSize">
-                    <div className='bgColor'>{product.size}</div>
-                    <div className="stock" style={{background:'gray',marginLeft:3}}>{product.stock}</div>
-                </div>
-            }
 
             <Card.Img variant="top" src={product.img} />
             <Card.Body>
