@@ -31,7 +31,7 @@ const EditProducts = () => {
 
     // values of all input tags using usestate
     const [inputs, setInputs] = useState({
-        productId:"",name:"",brand:"",color:"",size:"",img:"",description:"",price:"",actualPrice:"",pincodes:"",stock:"",specialOffer:false,inTrending:false
+        productId:"",name:"",img:"",description:"",price:"",actualPrice:""
     })
 
     const {id} = useParams();
@@ -42,9 +42,8 @@ const EditProducts = () => {
             data = await SelectedProductsDetails(query);
             data = data[0];
             setInputs({
-                productId:data.productId,name:data.name,brand:data.brand,color:data.color,size:data.size,
-                description:data.description,price:data.price,actualPrice:data.actualPrice,
-                pincodes:data.pincodes,stock:data.stock,inTrending:data.inTrending,specialOffer:data.specialOffer
+                productId:data.productId,name:data.name,
+                description:data.description,price:data.price,actualPrice:data.actualPrice
             });
             setIsDataFetched(true);
         }
@@ -61,13 +60,7 @@ const EditProducts = () => {
     const handleChange = (e)=>{
         key = e.target.name;
         val = e.target.value;
-        check = e.target.checked;
-        console.log(typeof(check),check,key);
-        if(key=='inTrending' || key=='specialOffer'){
-            setInputs({...inputs,[key]:check});
-        }else{
-            setInputs({...inputs,[key]:val});
-        }
+        setInputs({...inputs,[key]:val});
     }
 
     // updating the image uploaded 
@@ -84,7 +77,7 @@ const EditProducts = () => {
     // sending data to backend 
     const sendData = async ()=>{
         try{
-            if(!inputs.stock || !inputs.price || !inputs.actualPrice || !inputs.description || !inputs.pincodes){
+            if(!inputs.price || !inputs.actualPrice || !inputs.description){
                 setImgTypeAlert('none');
                 setIncompleteAlert('block');
                 setErrorAlert('none')
@@ -150,20 +143,14 @@ const EditProducts = () => {
         ?<div className="font1 textColor heading container">Loading Data ....</div>
         :<div className="container d-flex flex-wrap justify-content-between mt-2">
             <div className="d-flex flex-column my-4 ">
-                <div className="heading font1 textColor">{inputs.brand}</div>
                 <div className="subHeading font1" style={{color:'gray'}}>{inputs.name}</div>
-                <div className="font1 mt-2" style={{color:'gray'}}>Color:{inputs.color} , Size:{inputs.size}</div>
             </div>
             <div className="d-flex align-items-center justify-content-between" id='smallInputs'>
-                <div className="d-flex inputBox">
-                    <div className="font1">Stock</div>
-                    <input type="number" placeholder='eg . 3' name='stock' onChange={handleChange} value={inputs.stock} />
-                </div>
-                <div className="d-flex inputBox">
+                <div className="d-flex inputBox w-100">
                     <div className="font1">MRP of product(₹)</div>
                     <input type="number" placeholder='100' name='actualPrice' onChange={handleChange} value={inputs.actualPrice} />
                 </div>
-                <div className="d-flex inputBox">
+                <div className="d-flex inputBox w-100">
                     <div className="font1">Discounted Price(₹)</div>
                     <input type="number" placeholder='if not discount same as actual price' name='price' onChange={handleChange} value={inputs.price} />
                 </div>
@@ -173,10 +160,6 @@ const EditProducts = () => {
                 <textarea name='description' placeholder='description and specs' onChange={handleChange} value={inputs.description}></textarea>
             </div>
            
-            <div className="d-flex d-flex flex-column w-100">
-                <div className="font1">Pincodes to which is deliverable</div>
-                <textarea name='pincodes' placeholder=" eg. 123401 482005 123421" onChange={handleChange} value={inputs.pincodes}></textarea>
-            </div>
 
             <div className="d-flex w-100 flex-column mt-3">
                 <div className="font1">Update Image</div>
@@ -184,17 +167,7 @@ const EditProducts = () => {
                 <input name='img' type="file" onChange={uploadImage} />
             </div>
 
-            <div className="d-flex checkParentBox font1">
-                <div className="checkBox">
-                    <input type="checkbox" name='inTrending' checked={inputs.inTrending} onChange={handleChange}/>
-                    <div className='mt-1 ms-1'>In Trending</div>
-                </div>
-                <div className="checkBox">
-                    <input type="checkbox" name='specialOffer' checked={inputs.specialOffer} onChange={handleChange}/>
-                    <div className='mt-1 ms-1'>Special Offers</div>
-                </div>
-            </div>
-            <div className="btn w-100" onClick={sendData} >Save Changes</div>
+            <div className="btn w-100 mt-5" onClick={sendData} >Save Changes</div>
         </div>
         }
     </div>
