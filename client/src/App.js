@@ -82,7 +82,7 @@ function App() {
 					<Route exact path="/forgotPassword" element={<ForgotPassword />} />
 					<Route exact path="/add" element={<AddProducts />} />
 					<Route exact path="/edit/:id" element={<EditProducts />} />
-					<Route exact path="/allProducts" element={<AllProducts />} />
+					<Route exact path="/allHostels" element={<AllProducts />} />
 					<Route exact path="/addressInfo" element={<AddressInfo />} />
 					<Route exact path="/success" element={<Success />} />
 					<Route exact path="/payment" element={<Payment />} />

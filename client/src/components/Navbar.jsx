@@ -5,15 +5,10 @@ import {useSelector} from 'react-redux'
 
 // imporing images and others 
 import {AiFillHeart} from 'react-icons/ai'
-import {FaShoppingBag} from 'react-icons/fa'
+import {AiFillHome} from 'react-icons/ai'
 import {BsPersonFill} from 'react-icons/bs'
 import {FiPower} from 'react-icons/fi'
-import {GiShoppingCart} from 'react-icons/gi'
-import {AiFillHome} from 'react-icons/ai'
 import {IoIosAddCircle} from 'react-icons/io'
-import {IoMdNotificationsOutline} from 'react-icons/io'
-import {BsFillHandThumbsUpFill} from 'react-icons/bs'
-import {GiClothes} from 'react-icons/gi'
 
 // importing css 
 import '../styles/navbar.css'
@@ -111,43 +106,22 @@ const Navbar = () => {
                                 {(props) => (
                                 <Tooltip id="overlay-example" {...props}>
                                     <div className="d-flex flex-column">
-                                       {!isAdmin && <div onClick={()=>{navigateFunc('/addressInfo')}} className='links'>
-                                            <div className="d-flex align-items-center">
-                                            <AiFillHome className='me-2 textColor' />
-                                            <div>Delivery Adress</div>
-                                            </div>
-                                        </div>}
                                        {!isAdmin && <div onClick={()=>{navigateFunc('/userOrders')}} className='links'>
                                             <div className="d-flex align-items-center">
-                                            <GiShoppingCart className='me-2 textColor' />
-                                            <div>My orders</div>
+                                            <AiFillHome className='me-2 textColor' />
+                                            <div>Booking Details</div>
                                             </div>
                                         </div>}
                                         {isAdmin && <div onClick={()=>{navigateFunc('/add')}} className='links'>
                                             <div className="d-flex align-items-center">
                                             <IoIosAddCircle className='me-2 textColor' />
-                                            <div>Add Product</div>
+                                            <div>Add Hostel</div>
                                             </div>
                                         </div>}
-                                       {isAdmin && <div onClick={()=>{navigateFunc('/allProducts')}} className='links'>
+                                       {isAdmin && <div onClick={()=>{navigateFunc('/allHostels')}} className='links'>
                                             <div className="d-flex align-items-center">
-                                            <GiClothes className='me-2 textColor' />
-                                            <div>All Products</div>
-                                            </div>
-                                        </div>}
-                                        {isAdmin && <div onClick={()=>{navigateFunc('/newOrders')}} className='links'>
-                                            <div className="d-flex align-items-center orderNotify">
-                                            <IoMdNotificationsOutline className='me-2 textColor' />
-                                            {/* {!ordersInfo.loading && ordersInfo.status==200 && ordersInfo.newOrders.length>0 
-                                                && <i>{ordersInfo.newOrders.length}</i>
-                                            } */}
-                                            <div>New Orders</div>
-                                            </div>
-                                        </div>}
-                                        {isAdmin && <div onClick={()=>{navigateFunc('/deliveredOrders')}} className='links'>
-                                            <div className="d-flex align-items-center">
-                                            <BsFillHandThumbsUpFill className='me-2 textColor' />
-                                            <div>Delivered Orders</div>
+                                            <AiFillHome className='me-2 textColor' />
+                                            <div>All Hostels</div>
                                             </div>
                                         </div>}
                                         <div className='links' onClick={()=>{setLogoutBox('flex')}}>
