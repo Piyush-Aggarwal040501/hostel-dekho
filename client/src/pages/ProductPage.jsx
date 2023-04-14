@@ -57,10 +57,7 @@ const ProductPage = ({}) => {
 
     const id = name.toLowerCase()+" "+brand.toLowerCase()+" "+color+" "+size;
     let data,reviews;
-    const [colorsArray, setColorsArray] = useState([]);
-    const [sizeArray, setSizeArray] = useState([]);
     const [commentsArray, setCommentsArray] = useState([]);
-    const [isProductInCartAlready, setIsProductInCartAlready] = useState(false);
 
     const fetchProductDetails = async ()=>{
         const productObj = {name:name,brand:brand,color:color,size:size};
@@ -69,78 +66,37 @@ const ProductPage = ({}) => {
         reviews = await GetReviews(name,brand);
         setDetails(data);
         setCommentsArray(reviews);
-        const colorsObj = {name:name,brand:brand,size:size};
-        const sizeObj = {name:name,brand:brand,color:color};
-        setColorsArray(await SelectedProductsDetails(colorsObj));
-        setSizeArray(await SelectedProductsDetails(sizeObj));
+       
     }
 
     // function to make array of ids from json of ids and qty 
-    const findProductIdsArray = (cart)=>{
-        let idsArray = [];
-        for(let item in cart){
-            idsArray.push(cart[item].productId)
-        }
-        return idsArray;
-    }
+    // const findProductIdsArray = (cart)=>{
+    //     let idsArray = [];
+    //     for(let item in cart){
+    //         idsArray.push(cart[item].productId)
+    //     }
+    //     return idsArray;
+    // }
 
     useEffect(() => {
         if(loading===false && status==200){
             setEmail(userInfo.email);
-            let array = findProductIdsArray(userInfo.cart);
-            if(array.includes(id)){
-                setIsProductInCartAlready(true);
-            }else{
-                setIsProductInCartAlready(false);
-            }
         }
         fetchProductDetails();
-    }, [loading,email,isProductInCartAlready])
+    }, [loading,email])
 
 
     // add to cart 
     const navigate = useNavigate();
-    const [successToAddToCart, setSuccessToAddToCart] = useState('none')
-    const addToMyCart = async ()=>{
-        if(status==200){
-            const res = await AddToCart(email,details.productId,true,1,'add');
-            if(res.status==200){
-                setSuccessToAddToCart('flex');
-                setTimeout(() => {
-                    setSuccessToAddToCart('none');
-                }, 2000);
-            }
-            loadReduxData();
-        }else{
-            navigate('/login');
-        }
-    }
   
 
 
 
-    // to check pincode enter by user is correct or not 
-    function validatePincode(pin){
-        let j;
-        if(pin.length ==6){
-            for(let i=0;i<6;i++){
-                j = pin.charCodeAt(i);
-                if(j<48 || j>57){
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-    const checkForPin = async(productId,pin)=>{
-        let check = await CheckForPincode(productId,pin);
-        setAvailableForPincode(check);
-    }
+    
     
 
 
-    // rating box show and hide and verify for the userif he has ordered the product or not
+    // rating box show and hide and verify for the userif he has booked the hostel or not
 
     const checkIsProductInOrders = ()=>{
         for(let i in orders){
@@ -213,37 +169,23 @@ const ProductPage = ({}) => {
     }
 
 
-    const [outOfStock, setOutOfStock] = useState('none');
     // for buying product 
     const buyProduct = ()=>{
         if(status!=200){
             navigate('/login');
         }else{
-            if(details.stock==0){
-                setOutOfStock('flex');
-                setTimeout(() => {
-                    setOutOfStock('none');
-                }, 4000);
-                return;
-            }
             let product = details;
             product['qty'] = 1;
             let orderCart = new Array(product);
             orderCart = JSON.stringify(orderCart)
             sessionStorage.setItem('orderCart',orderCart);
-            if(userInfo.pin){
-                navigate('/payment');
-            }else{
-                navigate('/addressInfo');
-            }
+            navigate('/payment');
         }
     }
   
 
   return (
     <div id='productPage' className='pb-5'>
-        <AlertBox content="successfully added to cart" status="200" display={successToAddToCart} />
-        <AlertBox content="Sorry , Product is out of stock" status="500" display={outOfStock} />
         {(!details.productId || loading)  && <Loading/>}
         <div className="container">
 
@@ -253,12 +195,8 @@ const ProductPage = ({}) => {
                         <img src={details.img} alt={details.name} />
                     </div>
                     {!isAdmin &&
-                        <div className='buttons mt-10'>
-                            {isProductInCartAlready 
-                                ?<Link to={'/mycart'} className="btn btn-warning">Go To cart</Link>
-                                :<div className="btn btn-warning" onClick={addToMyCart}>Add To Cart</div>
-                            }
-                            <div className="btn btn-secondary" onClick={buyProduct}>Buy Now</div>
+                        <div className='buttons mt-10 w-100'>
+                            <div className="btn btn-secondary w-100" onClick={buyProduct}>Book Now</div>
                         </div>
                     }
                 </div>
@@ -290,53 +228,15 @@ const ProductPage = ({}) => {
                         </b>
                     }
 
-                    {details.stock==0 && <div className="font1 text-danger subHeading mb-3">Out Of Stock</div>}
+                    
                     
                     <div className="description">{details.description}</div>
 
-                    <div className='font1 mt-2' style={{color:'gray'}}><b>Color:{details.color}</b></div>
-                    <div className='font1' style={{color:'gray'}}><b>Size:{details.size}</b></div>
-
-
-                    <div className="colorsBox">
-                        <div className="font1 subHeading textColor mx-2">Colours Available</div>
-                        <div className="d-flex py-2 flex-wrap">
-                            {colorsArray.map((value,index)=>(
-                                <a key={index} href={'/product?name='+value.name+'&brand='+value.brand+'&color='+value.color+'&size='+value.size} className='mx-2 my-2 font1'>
-                                    {id==value.productId? <img src={value.img} alt={value.productId}  className='active' />
-                                    : <img src={value.img} alt={value.productId} />
-                                    }
-                                </a>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="sizeBox mt-2">
-                        <div className="font1 subHeading textColor mx-2">Sizes Available</div>
-                        <div className="d-flex py-2 flex-wrap">
-                            {sizeArray.map((value,index)=>(
-                                <a key={index} href={'/product?name='+value.name+'&brand='+value.brand+'&color='+value.color+'&size='+value.size} className='mx-2 my-2 font1'>
-                                    {id==value.productId?<div key={index} className="btn active">{value.size}</div>
-                                    :<div key={index} className="btn">{value.size}</div>
-                                    }
-                                </a>
-                            ))}
-                        </div>
-                    </div>
-
                     
-
-                    {/* {!isAdmin && <div className="checkPincode d-flex mt-3 mb-2">
-                        <input name='pincode' type="text" placeholder='Enter pincode' value={inputs.pincode} onChange={handleChange} maxLength='6' />
-                        {validatePincode(inputs.pincode) &&  <div className="btn" onClick={()=>{checkForPin(details.productId,inputs.pincode)}}>Check</div>}
-                    </div>}
-                    {availableForPincode==null && <div></div>}
-                    {availableForPincode==true && <div className='font1' style={{color:'green'}}>Yes it is delevirable</div>}
-                    {availableForPincode==false && <div className='font1' style={{color:'red'}}>Not deleverable to this pincode</div>} */}
-                                    
-                    {!isAdmin && <div className="btn rateProduct mt-4" onClick={showHide}>Rate Product</div>}
-                    <div className="text-danger font1 mt-2" style={{display:cantRate}}>You can't rate as you have not ordered the product</div>
-                    <div className="text-danger font1 mt-2" style={{display:alreadyRated}}>You have alrready reviewed the product</div>
+                    
+                    {!isAdmin && <div className="btn rateProduct mt-4" onClick={showHide}>Rate Hostel</div>}
+                    <div className="text-danger font1 mt-2" style={{display:cantRate}}>You can't rate as you have not booked the hostel</div>
+                    <div className="text-danger font1 mt-2" style={{display:alreadyRated}}>You have alrready reviewed the hostel</div>
                     <div className="font1 text-success mb-3" style={{display:reviewSuccess}}>Thnx for reviewing</div>
                     <div className="submitRating" style={{display:ratingBox}}>
                             <div className="font1 text-danger mb-3 text-center" style={{fontSize:13,display:reviewIncomplete}}>Fill your name ,comment  and rating</div>
