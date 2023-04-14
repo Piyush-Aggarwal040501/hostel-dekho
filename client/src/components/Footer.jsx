@@ -11,7 +11,7 @@ const Footer = () => {
 	return (
 		<footer id="footer">
 			<div className="bgColor font1 copyright">
-				All right are reserved by © 2007-2022 trenders.com
+				All right are reserved by © 2023 hosteldekho.com
 			</div>
 		</footer>
 	);
