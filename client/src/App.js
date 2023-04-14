@@ -16,7 +16,7 @@ import KidsSection from './pages/KidsSection';
 import Whilist from './pages/Whilist';
 import Cart from './pages/Cart';
 import ProductPage from './pages/ProductPage';
-import AddProducts from './pages/AddProducts';
+import AddHostel from './pages/AddHostel';
 import EditProducts from './pages/EditProducts';
 import AllProducts from './pages/AllProducts';
 import Login from './pages/Login';
@@ -80,7 +80,7 @@ function App() {
 					<Route exact path="/login" element={<Login />} />
 					<Route exact path="/signup" element={<Signup />} />
 					<Route exact path="/forgotPassword" element={<ForgotPassword />} />
-					<Route exact path="/add" element={<AddProducts />} />
+					<Route exact path="/add" element={<AddHostel />} />
 					<Route exact path="/edit/:id" element={<EditProducts />} />
 					<Route exact path="/allHostels" element={<AllProducts />} />
 					<Route exact path="/addressInfo" element={<AddressInfo />} />

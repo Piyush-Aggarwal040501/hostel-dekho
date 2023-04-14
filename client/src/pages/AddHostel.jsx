@@ -9,10 +9,11 @@ import axios from 'axios';
 import '../styles/addEditProducts.css'
 import {Alert} from 'react-bootstrap'
 import { categoryArray } from '../information/categoryArrays';
+import { areaArr } from '../information/areaArray';
 
 import Loading from '../components/Loading'
 
-const AddProducts = () => {
+const AddHostel = () => {
     // data from redux 
     // let {loading=true,status,isAdmin} = useSelector((state)=>state.userDetailsReducer);
     const navigate = useNavigate();
@@ -148,15 +149,7 @@ const AddProducts = () => {
         <div className="container d-flex flex-wrap justify-content-between mt-4">
             <div className="d-flex inputBox">
                 <div className="font1">Hostel Name</div>
-                <input type="text" placeholder='eg .' name='name' onChange={handleChange} value={inputs.name} />
-            </div>
-            <div className="d-flex inputBox">
-                <div className="font1">Area</div>
-                <input type="text" placeholder='eg talwandi' name='brand' onChange={handleChange} value={inputs.brand} />
-            </div>
-            <div className="d-flex inputBox">
-                <div className="font1">Price(pre month)</div>
-                <input type="text" placeholder='eg . 10,000' name='color' onChange={handleChange} value={inputs.color} />
+                <input type="text" placeholder='eg . allen hostel' name='name' onChange={handleChange} value={inputs.name} />
             </div>
             <div className="d-flex inputBox">
                 <div className="font1">Category</div>
@@ -167,41 +160,14 @@ const AddProducts = () => {
                 </select>
             </div>
             
-            {/* <div className="d-flex align-items-center justify-content-between" id='smallInputs'>
+            <div className="d-flex align-items-center justify-content-between" id='smallInputs'>
                 <div className="d-flex inputBox">
-                    <div className="font1">Occasion</div>
-                    <select name="occasion" value={inputs.occasion} onChange={(e)=>{setInputs({...inputs,'occasion':e.target.value})}}>
-                        <option value="Casual">Casual</option>
-                        <option value="Formal">Formal</option>
-                        <option value="Party Wear">Party Wear</option>
+                    <div className="font1">Area</div>
+                    <select name="area" value={inputs.area} onChange={(e)=>{setInputs({...inputs,'area':e.target.value})}}>
+                        {areaArr.map((item)=>(
+                            <option value={item.area}>{item.area}</option>
+                        ))}
                     </select>
-                </div>
-                <div className="d-flex inputBox">
-                    <div className="font1">Gender</div>
-                    <select name="gender" value={inputs.gender} onChange={(e)=>{setInputs({...inputs,'gender':e.target.value})}}>
-                    <option value="Mens">Mens</option>
-                    <option value="Womens">Womens</option>
-                    <option value="Boys">Boys</option>
-                    <option value="Girls">Girls</option>
-                    </select>
-                </div>
-                <div className="d-flex inputBox">
-                    <div className="font1">Size</div>
-                    <select name="size" value={inputs.size} onChange={(e)=>{setInputs({...inputs,'size':e.target.value})}}>
-                    <option value="XS">XS</option>
-                    <option value="S">S</option>
-                    <option value="M">M</option>
-                    <option value="L">L</option>
-                    <option value="XL">XL</option>
-                    <option value="XXL">XXL</option>
-                    <option value="XXXL">XXXL</option>
-                    </select>
-                </div>
-            </div> */}
-            {/* <div className="d-flex align-items-center justify-content-between" id='smallInputs'>
-                <div className="d-flex inputBox">
-                    <div className="font1">Stock</div>
-                    <input type="number" placeholder='eg . 3' name='stock' onChange={handleChange} value={inputs.stock} />
                 </div>
                 <div className="d-flex inputBox">
                     <div className="font1">MRP of product(₹)</div>
@@ -211,35 +177,21 @@ const AddProducts = () => {
                     <div className="font1">Discounted Price(₹)</div>
                     <input type="number" placeholder='if not discount same as actual price' name='price' onChange={handleChange} value={inputs.price} />
                 </div>
-            </div> */}
-            <div className="d-flex w-100 flex-column">
-                <div className="font1">About hostel</div>
-                <textarea name='description' placeholder='description of the hostel' onChange={handleChange} value={inputs.description}></textarea>
             </div>
             <div className="d-flex w-100 flex-column">
-                <div className="font1">Extra facilities</div>
-                <textarea name='pincodes' placeholder=" eg. mess laundary wifi tec" onChange={handleChange} value={inputs.pincodes}></textarea>
+                <div className="font1">Desscription of Hostel</div>
+                <textarea name='description' placeholder='description and facilities' onChange={handleChange} value={inputs.description}></textarea>
             </div>
 
             <div className="d-flex w-100 flex-column mt-3">
-                <div className="font1">Image of hostel in jpg or png or gif</div>
+                <div className="font1">Image of product in jpg or png or gif</div>
                 <input name='img' type="file" onChange={uploadImage} />
             </div>
 
-            {/* <div className="d-flex checkParentBox">
-                <div className="checkBox">
-                    <input type="checkbox" name='inTrending' onChange={handleChange}/>
-                    <div className='mt-1 ms-1'>In Trending</div>
-                </div>
-                <div className="checkBox">
-                    <input type="checkbox" name='specialOffer' onChange={handleChange}/>
-                    <div className='mt-1 ms-1'>Special Offers</div>
-                </div>
-            </div> */}
-            <div className="btn w-100 mt-3" onClick={sendData} >Add Hostel</div>
+            <div className="btn w-100 mt-5" onClick={sendData} >Add Hostel</div>
         </div>
     </div>
   )
 }
 
-export default AddProducts
+export default AddHostel

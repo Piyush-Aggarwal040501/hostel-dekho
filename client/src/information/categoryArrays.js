@@ -2,13 +2,6 @@ export const categoryArray = [
     {img:'/images/shirts.jpg' , category:'Boys' ,link:'/products?search=shirts'},
     {img:'/images/t-shirts.jpg' , category:'Girls' ,link:'/products?search=tshirts'},
     {img:'/images/t-shirts.jpg' , category:'Both' ,link:'/products?search=tshirts'},
-    // {img:'/images/jeans.jpg' , category:'Jeans' ,link:'/products?search=jeans'},
-    // {img:'/images/kurta.jpg' , category:'Kurta' ,link:'/products?search=kurta'},
-    // {img:'/images/tops.jpg' , category:'Tops' ,link:'/products?search=tops'},
-    // {img:'/images/lehanga.jpg' , category:'Lehanga' ,link:'/products?search=lehanga'},
-    // {img:'/images/sherwani.jpg' , category:'Sherwani' ,link:'/products?search=sherwani'},
-    // {img:'/images/jacketw.jpg' , category:'Jacket' ,link:'/products?search=jacket'},
-    // {img:'/images/lower.jpg' , category:'Lower' ,link:'/products?search=lower'},
 ];
 
 
